@@ -3,7 +3,14 @@ public class Board{
     int size;
 
     public static void main(String[]args){
-	Board b1 = new Board(10);
+	/*
+	for (int i = 0; i < 30; i++){
+	    Board bi = new Board(i);
+	    bi.solve();
+	}
+	*/
+	//Board b1 = new Board(31);
+	/*
 	b1.printBoard();
 	b1.addQueen(3,3);
 	b1.addQueen(0,9);
@@ -13,6 +20,8 @@ public class Board{
 	b1.removeQueen(0,9);
 	b1.printBoard();
 	b1.printBoardFancy();
+	*/
+	//b1.solve();
     }
 
     public Board(int side){
@@ -29,7 +38,36 @@ public class Board{
 	}
     }
 
-    public boolean addQueen(int row, int col){//should this return a boolean?
+    public boolean solve(){
+	if (solveHelper(0)){
+	    printBoard();
+	    printBoardFancy();
+	    return true;
+	}
+	return false;
+    }
+    
+    //for some reason everything is sideways and I can't find the place where I switched the rows and cols
+    public boolean solveHelper(int row){
+	if (row == size){
+	    return true;
+	    //this seems to go past the solution...
+	}
+	for (int i = 0; i < size; i++){
+	    if (addQueen(row,i)){
+		//printBoardFancy();
+		if (solveHelper(row + 1)){
+		    return true;
+		    //this should finish
+		}
+		removeQueen(row, i);
+	    }
+	}
+	return false;
+    }
+
+    public boolean addQueen(int row, int col){
+	//make this private
 	if (board[row][col] != 0){
             return false;
 	}
@@ -82,9 +120,10 @@ public class Board{
 	    newrow--;
 	}
 	return true;
+	//don't really need the loops going back, can make this much shorter
     }
 
- public boolean removeQueen(int row, int col){//should this return a boolean?
+    public boolean removeQueen(int row, int col){//make this private
 	if (board[row][col] != 1){
             return false;
 	}
@@ -157,10 +196,13 @@ public class Board{
 	for(int i = 0; i < size; i++){
 	    for(int j = 0; j < size; j++){
 		if(board[i][j] == 1){
-		    System.out.print("Q");
+		    System.out.print("Q ");
 		}
-		if(board[i][j] < 0){
+		else if(board[i][j] < 0){
 		    System.out.print("- ");
+		}
+		else if(i!= 0 && board[i - 1][j] == 1){
+		    System.out.print(" ");
 		}else{
 		    System.out.print("  ");
 		}
