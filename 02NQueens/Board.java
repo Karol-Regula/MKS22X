@@ -9,7 +9,7 @@ public class Board{
 	    bi.solve();
 	}
 	*/
-	//Board b1 = new Board(31);
+	Board b1 = new Board(29);
 	/*
 	b1.printBoard();
 	b1.addQueen(3,3);
@@ -21,7 +21,7 @@ public class Board{
 	b1.printBoard();
 	b1.printBoardFancy();
 	*/
-	//b1.solve();
+	b1.solve();
     }
 
     public Board(int side){
