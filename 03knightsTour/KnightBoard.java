@@ -6,7 +6,6 @@ public class KnightBoard{
     int counter;
     
     public static void main(String[]args){
-	/*
 	KnightBoard b1 = new KnightBoard(5,5);
 	b1.solve();
 	b1.printSolution();
@@ -25,7 +24,6 @@ public class KnightBoard{
 	KnightBoard b6 = new KnightBoard(5,6);
 	b6.solve();
 	b6.printSolution();
-	*/
     }
 
     public KnightBoard(int rowsNum, int colsNum){
