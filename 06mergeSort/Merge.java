@@ -1,5 +1,5 @@
 public class Merge{
-
+    //this is the old version of merge that is not used in mergeSort
     public static void main(String[]args){
 	int[] ary1 = new int[]{1,3,7,16,67,765,765};
 	int[] ary2 = new int[]{2,3,3,8,78,764,766};
