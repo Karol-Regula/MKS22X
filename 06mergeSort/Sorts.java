@@ -5,8 +5,10 @@ public class Sorts{
 	int[] ary = new int[]{1,3,7,16,67,765,7652,3,3,8,78,764,766};
 	//merge(ary, 0, 6, 7, 12);
 	int[] ary1 = new int[]{0,0,0,34623,0,2,5,7,3,1,6,8,4,2,5,6,8,9,44,22,1,0,0,0,0,0,43,1234,12315,34623,2,2,0,1};
+	
 	mergeSort(ary1);
-	System.out.println("---------------------");
+	System.out.println(name());
+	//System.out.println("---------------------");
 	for (int i = 0; i < ary1.length; i++){
 	    System.out.println(ary1[i]);
 	}
@@ -48,9 +50,9 @@ public class Sorts{
 	mergeSortHelper(data, 0, data.length - 1);
     }
 
-    public static void mergeSortHelper(int[] data, int start, int end){
+    private static void mergeSortHelper(int[] data, int start, int end){
 	if (end - start > 1){
-	    System.out.println(start + " " + end);
+	    //System.out.println(start + " " + end);
 	    mergeSortHelper(data, start, (end + start) / 2);
 	    mergeSortHelper(data, ((end + start) / 2) + 1, end);
 	}
@@ -144,18 +146,18 @@ public class Sorts{
     }
 
     public static void merge(int[] ary, int sA, int eA, int sB, int eB){
-	System.out.println(sA + " " + eA + " " + sB + " " + eB);
+	//System.out.println(sA + " " + eA + " " + sB + " " + eB);
 	int origSA = sA;
 	int origSB = sB;
 	int[] out = new int[ary.length];
 	while (sA <= eA && sB <= eB){
 	    if (ary[sA] <= ary[sB]){
-		System.out.println("here1");
+		//System.out.println("here1");
 		out[origSA + (sA - origSA) + (sB - origSB)] = ary[sA];
 		sA++;
 	    }
 	    if (ary[sB] < ary[sA]){
-		System.out.println("here2");
+		//System.out.println("here2");
 		out[origSA + (sA - origSA) + (sB - origSB)] = ary[sB];
 		sB++;
 	    }
@@ -171,8 +173,12 @@ public class Sorts{
 	    sB++;
 	}
 	for (int i = origSA; i <= eB; i++){
-	    System.out.println(out[i]);
+	    //System.out.println(out[i]);
 	    ary[i] = out[i];
 	}
+    }
+
+    public static String name(){
+	return "7,Regula,Karol";
     }
 }
