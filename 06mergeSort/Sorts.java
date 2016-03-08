@@ -46,7 +46,7 @@ public class Sorts{
 	 */	 
      }
 
-    public static void mergeSort(int[] data){
+    public static void mergesort(int[] data){
 	mergeSortHelper(data, 0, data.length - 1);
     }
 
