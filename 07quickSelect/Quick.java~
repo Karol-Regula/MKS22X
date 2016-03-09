@@ -11,15 +11,16 @@ public class QuickSelect{
 	int endR = data.length;
 	int random;
 	int hold = 0;
-	int position;
+	int position = 0;
 	while (position != k){
-	    random = Math.random() * data.length;
+	    random = (int)(Math.random() * data.length);
 	    number = data[random];
-	    hold = data[data.length];
-	    data[data.length] = number;
+	    hold = data[data.length - 1];
+	    data[data.length - 1] = number;
 	    data[random] = hold;
-	    position = k;//remove this after done with debigging
+	    position = k;//remove this after done with debugging
 	}
+	printArray(data);
     }
 
     public static void printArray(int[] data){
