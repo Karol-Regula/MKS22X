@@ -2,8 +2,26 @@ public class Quick{
     
     public static void main(String[]args){
 	int[] data = new int[]{8,4,98,-5,5,9,7,1,3,6,0,5,4,6,8,11,456,23,1,4,6,7};
-	//int[] data = new int[]{8,4,2,5,9,7,1,3,6,0};
-	System.out.println(quickselect(data, 10));
+	int[] data2 = new int[]{8,4,2,5,9,7,1,3,6,0};
+	int[] data3 = new int[]{8,4,98,-5,5,9,7,1,3,6,0,5,4,6,8,11,456,23,1,4,6,7};
+	//printArray(data2);
+	quickSort(data3);
+	printArray(data3);
+	//System.out.println(quickselect(data, 10));
+    }
+
+    public static void quickSort(int[] data){
+	quickSort(data, 0, data.length - 1);
+    }
+
+    public static void quickSort(int[] data, int left, int right){
+	int position = partition(data, left, right);
+	//System.out.println(position);
+	if (left >= right){
+	    return;
+	}
+	quickSort(data, position + 1, right);
+	quickSort(data, left, position);
     }
 
     public static int quickselect(int[] data, int k){
