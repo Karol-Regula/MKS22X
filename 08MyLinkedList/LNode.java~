@@ -1,0 +1,10 @@
+public class LNode{
+
+    public int data;
+    public LNode next;
+
+    public LNode(int input){
+	data = input;
+	next = null;
+    }
+}
