@@ -1,6 +1,7 @@
 public class MyLinkedList{
     LNode start;
     int size;
+    LNode end;
     
     public static void main(String[]args){
 	MyLinkedList m1 = new MyLinkedList();
@@ -21,6 +22,7 @@ public class MyLinkedList{
 	System.out.println(m1.toString());
 	System.out.println(m1.add(0,33));
 	System.out.println(m1.add(3,44));
+	System.out.println(m1.add(5,66));
 	System.out.println(m1.add(100,55));
 	System.out.println(m1.toString());
     }
@@ -28,6 +30,7 @@ public class MyLinkedList{
     public MyLinkedList(){
 	start = null;
 	size = 0;
+	end = null;
     }
 
     public int size(){
@@ -57,18 +60,27 @@ public class MyLinkedList{
 	if (current == null){
 	    current = new LNode(input);
 	    start = current;
+	    end = current;
 	    return true;
 	}
 	while (current.getNext() != null){
 	    current = current.getNext();
 	}
 	current.next = new LNode(input);
+	end = current.getNext();
 	size++;
 	return true;
     }
 
     public boolean add(int index, int n){
 	LNode current = start;
+	if (current == null){
+	    current = new LNode(n);
+	    start = current;
+	    end = current;
+	    size++;
+	    return true;
+	}
 	LNode current2;
 	LNode insert = new LNode(n);
 	if (index >= size){
@@ -77,6 +89,10 @@ public class MyLinkedList{
 	if (index == 0){
 	    insert.setNext(current);
 	    start = insert;
+	}else if (index == size){
+	    current = end;
+	    current.setNext(insert);
+	    end = insert;
 	}else{
 	    for (int i = 0; i < index - 1; i++){
 		current = current.getNext();
@@ -85,6 +101,7 @@ public class MyLinkedList{
 	    current.setNext(insert);
 	    insert.setNext(current2);
 	}
+	size++;
 	return true;
     }
 
