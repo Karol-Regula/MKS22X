@@ -25,6 +25,28 @@ public class MyLinkedList<T>{
 	System.out.println(m1.add(5,66));
 	System.out.println(m1.add(100,55));
 	System.out.println(m1.toString());
+
+	MyLinkedList<String> m2 = new MyLinkedList<String>();
+	m2.add("a");
+	m2.add("b");
+	m2.add("c");
+	m2.add("abcdef");
+	m2.add("-2");
+	System.out.println(m2.toString());
+	System.out.println(m2.indexOf("b"));
+	System.out.println(m2.indexOf("-2"));
+	System.out.println(m2.get(0));
+	System.out.println(m2.get(4));
+	System.out.println(m2.set(4,"aaaaaaaaaaaaaa"));
+	System.out.println(m2.toString());
+	System.out.println(m2.remove(2));
+	System.out.println(m2.remove(3));
+	System.out.println(m2.toString());
+	System.out.println(m2.add(0,"z"));
+	System.out.println(m2.add(3,"y"));
+	System.out.println(m2.add(5,"x"));
+	System.out.println(m2.add(100,"w"));
+	System.out.println(m2.toString());
     }
 
     public MyLinkedList(){
@@ -72,7 +94,7 @@ public class MyLinkedList<T>{
 	return true;
     }
 
-    public boolean add(int index, int n){
+    public boolean add(int index, T n){
 	LNode current = start;
 	if (current == null){
 	    current = new LNode(n);
@@ -109,9 +131,11 @@ public class MyLinkedList<T>{
 	T out;
 	LNode current = start;
 	LNode current2;
+	/*
 	if (index >= size){
-	    return -1;
+	    return out;
 	}
+	*/
 	if (index == 0){
 	    out = current.getValue();
 	    current = current.getNext();
@@ -127,7 +151,7 @@ public class MyLinkedList<T>{
 	return out;
     }
 
-    public int indexOf(int n){
+    public int indexOf(T n){
 	LNode current = start;
 	int count = 0;
 	while (current != null){
@@ -176,7 +200,7 @@ public class MyLinkedList<T>{
 	    return true;
 	}
 	
-	public boolean setValue(int input){
+	public boolean setValue(T input){
 	    data = input;
 	    return true;
 	}
