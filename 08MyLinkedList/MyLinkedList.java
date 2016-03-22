@@ -1,10 +1,10 @@
-public class MyLinkedList{
+public class MyLinkedList<T>{
     LNode start;
     int size;
     LNode end;
     
     public static void main(String[]args){
-	MyLinkedList m1 = new MyLinkedList();
+	MyLinkedList<Integer> m1 = new MyLinkedList<Integer>();
 	m1.add(2);
 	m1.add(3);
 	m1.add(56);
@@ -37,7 +37,7 @@ public class MyLinkedList{
 	return size;
     }
 
-    public int get(int n){
+    public T get(int n){
 	LNode current = start;
 	for (int i = 0; i < n; i++){
 	    current = current.getNext();
@@ -45,17 +45,17 @@ public class MyLinkedList{
 	return current.getValue();
     }
 
-    public int set(int index, int n){
+    public T set(int index, T n){
 	LNode current = start;
 	for (int i = 0; i < index; i++){
 	    current = current.getNext();
 	}
-	int out = current.getValue();
+	T out = current.getValue();
 	current.setValue(n);
 	return out;
     }
 
-    public boolean add(int input){//adds to end
+    public boolean add(T input){//adds to end
 	LNode current = start;
 	if (current == null){
 	    current = new LNode(input);
@@ -105,8 +105,8 @@ public class MyLinkedList{
 	return true;
     }
 
-    public int remove(int index){
-	int out;
+    public T remove(int index){
+	T out;
 	LNode current = start;
 	LNode current2;
 	if (index >= size){
@@ -155,10 +155,10 @@ public class MyLinkedList{
 
     private class LNode{
 	
-	private int data;
+	private T data;
 	private LNode next;
 	
-	public LNode(int input){
+	public LNode(T input){
 	    data = input;
 	    next = null;
 	}
@@ -167,7 +167,7 @@ public class MyLinkedList{
 	    return next;
 	}
 	
-	public int getValue(){
+	public T getValue(){
 	    return data;
 	}
 	
@@ -182,3 +182,5 @@ public class MyLinkedList{
 	}
     }
 }
+//.equals for index of
+//not ==
