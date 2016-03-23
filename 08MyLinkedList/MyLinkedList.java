@@ -111,9 +111,6 @@ public class MyLinkedList<T>{
 	}
 	LNode current2;
 	LNode insert = new LNode(n);
-	if (index >= size){
-	    return false;
-	}
 	if (index == 0){
 	    insert.setNext(current);
 	    start = insert;
@@ -128,6 +125,7 @@ public class MyLinkedList<T>{
 	    current2 = current.getNext();
 	    current.setNext(insert);
 	    insert.setNext(current2);
+	    end = current2;
 	}
 	size++;
 	return true;
@@ -144,7 +142,7 @@ public class MyLinkedList<T>{
 	    out = current.getValue();
 	    current = current.getNext();
 	    start = current;
-	}else{
+	}else if (index != size - 1){
 	    for (int i = 0; i < index - 1; i++){
 		current = current.getNext();
 	    }
@@ -152,6 +150,12 @@ public class MyLinkedList<T>{
 	    current2 = current.getNext().getNext();
 	    out = current.getNext().getValue();
 	    current.setNext(current2);
+	}else{
+	    for (int i = 0; i < index - 2; i++){
+		current = current.getNext();
+	    }
+	    out = current.getNext().getValue();
+	    end = current;////////////////////
 	}
 	return out;
     }
@@ -174,10 +178,10 @@ public class MyLinkedList<T>{
 	String out = "[";
 	while (current != null){
 	    out += current.getValue();
-	    out += ",";
+	    out += ", ";
 	    current = current.getNext();
 	}
-	out = out.substring(0, out.length() - 1);
+	out = out.substring(0, out.length() - 2);
 	out += "]";
 	return out;
     }
