@@ -68,6 +68,9 @@ public class MyLinkedList<T>{
     }
 
     public T set(int index, T n){
+	if (index >= size || index < 0){
+	    throw new IndexOutOfBoundsException();
+	}
 	LNode current = start;
 	for (int i = 0; i < index; i++){
 	    current = current.getNext();
@@ -95,6 +98,9 @@ public class MyLinkedList<T>{
     }
 
     public boolean add(int index, T n){
+	if (index > size || index < 0){
+	    throw new IndexOutOfBoundsException();
+	}
 	LNode current = start;
 	if (current == null){
 	    current = new LNode(n);
@@ -128,14 +134,12 @@ public class MyLinkedList<T>{
     }
 
     public T remove(int index){
+	if (index >= size || index < 0){
+	    throw new IndexOutOfBoundsException();
+	}
 	T out;
 	LNode current = start;
 	LNode current2;
-	/*
-	if (index >= size){
-	    return out;
-	}
-	*/
 	if (index == 0){
 	    out = current.getValue();
 	    current = current.getNext();
@@ -144,6 +148,7 @@ public class MyLinkedList<T>{
 	    for (int i = 0; i < index - 1; i++){
 		current = current.getNext();
 	    }
+	    //fix this for removing last element goes too far
 	    current2 = current.getNext().getNext();
 	    out = current.getNext().getValue();
 	    current.setNext(current2);
