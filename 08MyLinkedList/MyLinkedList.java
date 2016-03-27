@@ -1,9 +1,12 @@
-public class MyLinkedList<T>{
+import java.util.*;
+
+public class MyLinkedList<T> implements Iterable<T>{
     LNode start;
     int size;
     LNode end;
     
     public static void main(String[]args){
+	/*
 	MyLinkedList<Integer> m1 = new MyLinkedList<Integer>();
 	m1.add(2);
 	m1.add(3);
@@ -15,7 +18,7 @@ public class MyLinkedList<T>{
 	System.out.println(m1.indexOf(3));
 	System.out.println(m1.get(0));
 	System.out.println(m1.get(4));
-	System.out.println(m1.set(4,1000));
+	//System.out.println(m1.set(4,1000));
 	System.out.println(m1.toString());
 	System.out.println(m1.remove(2));
 	System.out.println(m1.remove(3));
@@ -23,7 +26,7 @@ public class MyLinkedList<T>{
 	System.out.println(m1.add(0,33));
 	System.out.println(m1.add(3,44));
 	System.out.println(m1.add(5,66));
-	System.out.println(m1.add(100,55));
+	//System.out.println(m1.add(100,55));
 	System.out.println(m1.toString());
 
 	MyLinkedList<String> m2 = new MyLinkedList<String>();
@@ -37,7 +40,7 @@ public class MyLinkedList<T>{
 	System.out.println(m2.indexOf("-2"));
 	System.out.println(m2.get(0));
 	System.out.println(m2.get(4));
-	System.out.println(m2.set(4,"aaaaaaaaaaaaaa"));
+	//System.out.println(m2.set(4,"aaaaaaaaaaaaaa"));
 	System.out.println(m2.toString());
 	System.out.println(m2.remove(2));
 	System.out.println(m2.remove(3));
@@ -45,8 +48,22 @@ public class MyLinkedList<T>{
 	System.out.println(m2.add(0,"z"));
 	System.out.println(m2.add(3,"y"));
 	System.out.println(m2.add(5,"x"));
-	System.out.println(m2.add(100,"w"));
+	//System.out.println(m2.add(100,"w"));
 	System.out.println(m2.toString());
+	*/
+
+
+	MyLinkedList<String> m2 = new MyLinkedList<String>();
+	m2.add("a");
+	m2.add("b");
+	m2.add("c");
+	m2.add("abcdef");
+	m2.add("-2");
+	
+	for (String s : m2){
+	    System.out.println(s);
+	}
+
     }
 
     public MyLinkedList(){
@@ -164,7 +181,7 @@ public class MyLinkedList<T>{
 	LNode current = start;
 	int count = 0;
 	while (current != null){
-	    if (current.getValue() == n){
+	    if (current.getValue().equals(n)){
 		return count;
 	    }
 	    count++;
@@ -213,6 +230,39 @@ public class MyLinkedList<T>{
 	    data = input;
 	    return true;
 	}
+    }
+
+    public Iterator<T> iterator(){
+	return new LLIterator();
+    }
+
+    public class LLIterator implements Iterator<T>{
+	public LNode next;
+
+	public LLIterator(){
+	    next = start;
+	}
+	
+	public boolean hasNext(){
+	    if (next == null){
+		return false;
+	    }
+	    return true;
+	}
+	
+	public T next(){
+	    if (next == null){
+		throw new NoSuchElementException();
+	    }
+	    T out = next.getValue();
+	    next = next.getNext();
+	    return out;
+	}
+
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+
     }
 }
 //.equals for index of
