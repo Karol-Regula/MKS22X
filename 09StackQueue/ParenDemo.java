@@ -13,19 +13,22 @@ public class ParenDemo extends MyStack{
 
     public static boolean isMatching(String s){
 	MyStack<Character> m = new MyStack<Character>();
-	for (int i = 0; i < s.length() - 1; i++){
+	for (int i = 0; i < s.length(); i++){
 	    if (isOpening(s.charAt(i))){
 		m.push(s.charAt(i));
 	    }else{
-		if (m.size() == 0){
+		//System.out.println(m.size());
+		if (isClosing(s.charAt(i)) && m.size() == 0){
 		    return false;
 		}
-		if (!isOpening(s.charAt(i)) && convert(s.charAt(i)) != m.pop()){
+		//System.out.println(s.charAt(i) + " " + m.peek());
+		if (isClosing(s.charAt(i)) && convert(s.charAt(i)) != m.pop()){
 		    return false;
 		}
 	    }
 	}
-	return true;
+	//System.out.println(m.size());
+	return m.size() == 0;
     } 
     
     public static Character convert(char c){
@@ -39,7 +42,7 @@ public class ParenDemo extends MyStack{
 	    return '<';
 	}
 	if (c == ']'){
-	    return ']';
+	    return '[';
 	}
 	System.out.println("This should never print.");
 	return'-';
@@ -47,6 +50,10 @@ public class ParenDemo extends MyStack{
     
     public static boolean isOpening(char c){
 	return c == '(' || c == '{' || c == '<' || c == '[';
+    }
+
+    public static boolean isClosing(char c){
+	return c == ')' || c == '}' || c == '>' || c == ']';
     }
     
 }
