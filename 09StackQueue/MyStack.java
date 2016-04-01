@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class MyStack<T> extends MyLinkedList{
     public MyLinkedList<T> m1;
@@ -18,9 +19,26 @@ public class MyStack<T> extends MyLinkedList{
 	System.out.println(s1.pop());
 	System.out.println(s1.pop());
 	System.out.println(s1.isEmpty());
-	
+	//more advanced automated testing
+	MyStack<Integer> s2 = new MyStack<Integer>();
+	Random rand = new Random(0);
+	int n;
+	int sum = 0;
+	for (int i = 0; i < 100; i++){
+	    n = rand.nextInt(2);
+	    if (n == 0 || s2.isEmpty()){
+		s2.push(i);
+		sum += i;
+	    }
+	    if (n == 1){
+		s2.pop();
+		sum -= i;
+	    }
+	}
+	System.out.println(sum == 0);
+	//not everything is popped
     }
-
+    
     public MyStack(){
 	m1 = new MyLinkedList<T>();
     }
