@@ -25,6 +25,13 @@ public class MyDeque<T>{
 	d1.removeFirst();
 	d1.removeFirst();
 	d1.toString();
+
+	d1.removeLast();
+	d1.removeLast();
+	d1.removeLast();
+	d1.toString();
+	System.out.println(d1.getFirst());
+	System.out.println(d1.getLast());
 	/*
 	for (int i = 0; i < 10; i++){
 	    d1.addLast(i);
@@ -181,7 +188,50 @@ public class MyDeque<T>{
 	    return out;
 	}
     }
-    
+
+    public T removeLast(){
+	if (filled == 0){//if no values have yet been added
+	    throw new NoSuchElementException();
+	}
+	T out;
+	if (filled == 1){// if only one element left
+	    debug("removeLastCase1");
+	    out = data[end];//these typecasts may be a bad idea
+	    data[end] = null;
+	    start = 0;
+	    end = 0;
+	    filled--;
+	    return out;
+	}else if (end == 0 && filled > 1){// if the last element is at the beginning of the array and there are more than 1 elements in the array
+	    debug("removeLastCase2");
+	    out = data[end];
+	    data[end] = null;
+	    end = data.length - 1;
+	    filled--;
+	    return out;
+	}else{//standard case
+	    debug("removeLastCase3");
+	    out = data[end];
+	    data[end] = null;
+	    end--;
+	    filled--;
+	    return out;
+	}
+    }
+
+    public T getFirst(){
+	if (filled == 0){//if no values have yet been added
+	    throw new NoSuchElementException();
+	}
+	return data[start];
+    }
+
+    public T getLast(){
+	if (filled == 0){//if no values have yet been added
+	    throw new NoSuchElementException();
+	}
+	return data[end];
+    }
 
     public String toString(){
 	for (int i = 0; i < data.length; i++){
