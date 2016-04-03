@@ -1,13 +1,15 @@
+import java.util.NoSuchElementException;
+
 public class MyDeque<T>{
     public int start;
     public int end;
-    public Object[] data;
+    public T[] data;
     public int filled;
     public boolean debug = true;
     
     public static void main (String[]args){
 	MyDeque<Integer> d1 =  new MyDeque<Integer>();
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 4; i++){
 	    d1.addLast(i);
 	    d1.toString();
 	}
@@ -15,10 +17,14 @@ public class MyDeque<T>{
 	d1.toString();
 	d1.addFirst(101);
 	d1.toString();
-	for (int i = 0; i < 6; i++){
+	for (int i = 0; i < 2; i++){
 	    d1.addLast(i);
 	    d1.toString();
 	}
+	d1.removeFirst();
+	d1.removeFirst();
+	d1.removeFirst();
+	d1.toString();
 	/*
 	for (int i = 0; i < 10; i++){
 	    d1.addLast(i);
@@ -50,9 +56,10 @@ public class MyDeque<T>{
 	d1.toString();
 	*/
     }
-
+    @SuppressWarnings("unchecked")	
     public MyDeque(){
-	data = new Object[0];
+	data = (T[]) new Object[0];
+	//data = new Object[0];
 	grow();
 	start = 0;
 	end = 0;
@@ -63,20 +70,21 @@ public class MyDeque<T>{
 	    System.out.println(s);
 	}
     }
-
+    
+    @SuppressWarnings("unchecked")
     private void grow(){
 	if (data.length == 0){
 	    debug("growCase1");
-	    Object[] dataNew = new Object[1];
+	    T[] dataNew = (T[]) new Object[1];
 	    data = dataNew;
 	}else if (data.length == 1){
 	    debug("growCase2");
-	    Object[] dataNew = new Object[data.length * 2];
+	    T[] dataNew = (T[]) new Object[data.length * 2];
 	    dataNew[0] = data[0];
 	    data = dataNew;
 	}else{
 	    debug("growCase3");
-	    Object[] dataNew = new Object[data.length * 2];
+	    T[] dataNew = (T[]) new Object[data.length * 2];
 	    int i = start;
 	    int count = 0;
 	    while (i != end){
@@ -94,6 +102,7 @@ public class MyDeque<T>{
 	    dataNew[count] = data[i]; //this copies over the last value
 	    data = dataNew;
 	    end = count;
+	    start = 0;
 	}
     }
 
@@ -142,7 +151,37 @@ public class MyDeque<T>{
 	}
 	filled++;
     }
-	
+    
+    public T removeFirst(){
+	if (filled == 0){//if no values have yet been added
+	    throw new NoSuchElementException();
+	}
+	T out;
+	if (filled == 1){// if only one element left
+	    debug("removeFirstCase1");
+	    out = data[start];//these typecasts may be a bad idea
+	    data[start] = null;
+	    start = 0;
+	    end = 0;
+	    filled--;
+	    return out;
+	}else if (start == data.length - 1 && filled > 1){// if the first element is at the end of the array and there are more than 1 elements in the array
+	    debug("removeFirstCase2");
+	    out = data[start];
+	    data[start] = null;
+	    start = 0;
+	    filled--;
+	    return out;
+	}else{//standard case
+	    debug("removeFirstCase3");
+	    out = data[start];
+	    data[start] = null;
+	    start++;
+	    filled--;
+	    return out;
+	}
+    }
+    
 
     public String toString(){
 	for (int i = 0; i < data.length; i++){
