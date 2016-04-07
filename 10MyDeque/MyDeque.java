@@ -5,7 +5,7 @@ public class MyDeque<T>{
     public int end;
     public T[] data;
     public int filled;
-    public boolean debug = true;
+    public boolean debug = false;
     
     public static void main (String[]args){
 	MyDeque<Integer> d1 =  new MyDeque<Integer>();
@@ -147,7 +147,7 @@ public class MyDeque<T>{
 	    grow();
 	    data[end + 1] = value;
 	    end++;
-	}else if (filled < data.length && end == data.length){//if the last place in the array is full but there is space in the begnning
+	}else if (filled < data.length && end == data.length - 1){//if the last place in the array is full but there is space in the begnning
 	    debug("addLastCase3");
 	    end = 0;
 	    data[end] = value;
@@ -170,23 +170,19 @@ public class MyDeque<T>{
 	    data[start] = null;
 	    start = 0;
 	    end = 0;
-	    filled--;
-	    return out;
 	}else if (start == data.length - 1 && filled > 1){// if the first element is at the end of the array and there are more than 1 elements in the array
 	    debug("removeFirstCase2");
 	    out = data[start];
 	    data[start] = null;
 	    start = 0;
-	    filled--;
-	    return out;
 	}else{//standard case
 	    debug("removeFirstCase3");
 	    out = data[start];
 	    data[start] = null;
 	    start++;
-	    filled--;
-	    return out;
 	}
+	filled--;
+	return out;
     }
 
     public T removeLast(){
@@ -200,23 +196,19 @@ public class MyDeque<T>{
 	    data[end] = null;
 	    start = 0;
 	    end = 0;
-	    filled--;
-	    return out;
 	}else if (end == 0 && filled > 1){// if the last element is at the beginning of the array and there are more than 1 elements in the array
 	    debug("removeLastCase2");
 	    out = data[end];
 	    data[end] = null;
 	    end = data.length - 1;
-	    filled--;
-	    return out;
 	}else{//standard case
 	    debug("removeLastCase3");
 	    out = data[end];
 	    data[end] = null;
 	    end--;
-	    filled--;
-	    return out;
 	}
+	filled--;
+	return out;
     }
 
     public T getFirst(){
