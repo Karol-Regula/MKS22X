@@ -116,12 +116,20 @@ public class BetterMaze{
 	    //System.out.println(col + " " + row);
 	    if (maze[col][row] == 'E'){//yay found exit
 		int count = 0;
-		int[] temp = new int[1000];
+		int[] temp = new int[1];
 		while (current.prev != null){
 		    coords = current.value;
 		    col = coords[0];
 		    row = coords[1];
 		    //
+		    if (count >= temp.length - 2){
+			//grow
+			int[] nTemp = new int[temp.length * 2];
+			for (int i = 0; i < temp.length; i++){
+			    nTemp[i] = temp[i];
+			}
+			temp = nTemp;
+		    }
 		    temp[count] = row;
 		    temp[count + 1] = col;
 		    count += 2;
