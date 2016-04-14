@@ -4,9 +4,13 @@ import java.io.*;
 public class BetterMaze{
 
     public static void main(String[]args){
-	BetterMaze m1 = new BetterMaze("data2.dat");
+	BetterMaze m1 = new BetterMaze("data1.dat");
 	m1.setAnimate(true);
 	System.out.println(m1.solveBFS());
+	for (int i = 0; i < m1.solution.length; i++){
+	    System.out.print(m1.solution[i] + ", ");
+	}
+	System.out.println();
 	//m1.toString();
     }
     
@@ -84,8 +88,7 @@ public class BetterMaze{
      *Postcondition:  the correct solution is in the returned array
      **/
     public int[] solutionCoordinates(){
-        /** IMPLEMENT THIS **/      
-	return new int[1];
+	return solution;
     }    
 
     public boolean solveBFS(){  
@@ -110,17 +113,40 @@ public class BetterMaze{
 	    coords = current.value;
 	    col = coords[0];
 	    row = coords[1];
-	    System.out.println(col + " " + row);
+	    //System.out.println(col + " " + row);
 	    if (maze[col][row] == 'E'){//yay found exit
+		int count = 0;
+		int[] temp = new int[1000];
 		while (current.prev != null){
 		    coords = current.value;
 		    col = coords[0];
 		    row = coords[1];
-		    maze[col][row] = '@';
+		    //
+		    temp[count] = row;
+		    temp[count + 1] = col;
+		    count += 2;
+		    //need to grow
+		    //
+		    if (maze[col][row] != 'E'){
+			maze[col][row] = '@';
+		    }
 		    current = current.prev;
 		}
-		System.out.println("Solved");
-		System.out.println(toString());
+		count--;
+		solution = new int[count];
+		for (int i = 0; i < solution.length; i++){
+		    solution[i] = temp[count];
+		    count--;
+		}
+		//System.out.println("Solved");
+		//System.out.println(toString());
+		for (int i = 0; i < temp.length; i++){
+		    //System.out.print(temp[i] + ", ");
+		}
+		//System.out.println();
+		for (int i = 0; i < solution.length; i++){
+		    //System.out.print(solution[i] + ", ");
+		}
 		return true;
 	    }
 	    //will now check all directions and add Nodes as necessary
