@@ -4,7 +4,7 @@ import java.io.*;
 public class BetterMaze{
 
     public static void main(String[]args){
-	BetterMaze m1 = new BetterMaze("data1.dat");
+	BetterMaze m1 = new BetterMaze("data2.dat");
 	m1.setAnimate(true);
 	System.out.println(m1.solveBFS());
 	for (int i = 0; i < m1.solution.length; i++){
@@ -140,12 +140,13 @@ public class BetterMaze{
 		    }
 		    current = current.prev;
 		}
+		solution = new int[count];		
 		count--;
-		solution = new int[count];
-		for (int i = 0; i < solution.length; i++){
+		for (int i = 0; i < solution.length - 1; i++){
 		    solution[i] = temp[count];
 		    count--;
 		}
+		solution[solution.length - 1] = temp[count];
 		//System.out.println("Solved");
 		//System.out.println(toString());
 		for (int i = 0; i < temp.length; i++){
