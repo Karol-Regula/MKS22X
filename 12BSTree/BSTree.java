@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class BSTree<T extends Comparable<T>>{
 
     public static void main(String[]args){
@@ -7,7 +9,15 @@ public class BSTree<T extends Comparable<T>>{
 	t1.add(19);
 	t1.add(22);
 	t1.add(20);
-	System.out.println(t1.toString());
+	//System.out.println(t1.toString());
+	BSTree<Character> t2 = new BSTree<Character>();
+	t2.add('e');
+	t2.add('b');
+	t2.add('c');
+	t2.add('a');
+	t2.add('f');
+	t2.add('d');
+	System.out.println(t2.toString());
     }
     
     private class Node{
@@ -16,19 +26,21 @@ public class BSTree<T extends Comparable<T>>{
 	Node right;
 	// set/get: data/left/right
 	//completely ignore duplicates
+	//need to write remove
+	//hasChilden() might make this cleaner
 	
-	public int height(){ 
+	public int getHeight(){ 
 	    if (left == null && right == null){
 		return 1;
 	    }else if (left == null){
-		return 1 + right.height();
+		return 1 + right.getHeight();
 	    }else if (right == null){
-		return 1 + left.height();
+		return 1 + left.getHeight();
 	    }else{
-		if (right.height() >= left.height()){
-		    return 1 + right.height();
+		if (right.getHeight() >= left.getHeight()){
+		    return 1 + right.getHeight();
 		}else{
-		    return 1 + left.height();
+		    return 1 + left.getHeight();
 		}
 	    }
 	}
@@ -49,13 +61,13 @@ public class BSTree<T extends Comparable<T>>{
 	
 	public String toString(){
 	    if (left == null && right == null){
-		return data + " " + "_" + " " + "_"  + " ";
+		return data + " " + "_" + " " + "_";
 	    }else if (left == null){
-		return data + " " + "_" + " " + right.toString() + " ";
+		return data + " " + "_" + " " + right.toString();
 	    }else if (right == null){
-		return data + " "  + left.toString() + " " + "_" + " ";
+		return data + " "  + left.toString() + " " + "_";
 	    }else{
-		return data + " " + left.toString() + " " + right.toString() + " ";
+		return data + " " + left.toString() + " " + right.toString();
 	    }
 	}
 	public boolean contains(T value){
@@ -68,7 +80,14 @@ public class BSTree<T extends Comparable<T>>{
 	    }else{
 		return false;
 	    }
-	}	
+	}
+
+	public T remove(T value){
+	    //replacing
+	    //either with largest of small tree on left
+	    //or with smallest of large tree on right
+	    return value;
+	}
     }
     
     private Node root;
@@ -77,7 +96,7 @@ public class BSTree<T extends Comparable<T>>{
 	if (root == null){
 	    return 0;
 	}
-	return root.height();
+	return root.getHeight();
     }
     
     public void add(T value){
@@ -100,4 +119,11 @@ public class BSTree<T extends Comparable<T>>{
 	}
 	return root.contains(value);
     }
+
+    public T remove(T value){
+	if (root == null){
+	    throw new NoSuchElementException();
+	}
+	return root.remove(value);
+    } 
 }
