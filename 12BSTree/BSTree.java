@@ -1,7 +1,13 @@
 public class BSTree<T extends Comparable<T>>{
 
     public static void main(String[]args){
-	
+	BSTree<Integer> t1 = new BSTree<Integer>();
+	t1.add(7);
+	t1.add(1);
+	t1.add(19);
+	t1.add(22);
+	t1.add(20);
+	System.out.println(t1.toString());
     }
     
     private class Node{
@@ -9,6 +15,7 @@ public class BSTree<T extends Comparable<T>>{
 	Node left;
 	Node right;
 	// set/get: data/left/right
+	//completely ignore duplicates
 	
 	public int height(){ 
 	    if (left == null && right == null){
@@ -26,22 +33,30 @@ public class BSTree<T extends Comparable<T>>{
 	    }
 	}
 	public void add(T value){
-	    if (value.compareTo(data) > 0 && left == null){
+	    if (value.compareTo(data) < 0 && left == null){
 		left = new Node();
 		left.data = value;
-	    }else if (value.compareTo(data) < 0 && right == null){
+	    }else if (value.compareTo(data) > 0 && right == null){
 		right = new Node();
 		right.data = value;
-	    }else if (value.compareTo(data) > 0 && left != null){
+	    }else if (value.compareTo(data) < 0 && left != null){
 		left.add(value);
-	    }else if (value.compareTo(data) < 0 && right != null){
+	    }else if (value.compareTo(data) > 0 && right != null){
 		right.add(value);
 	    }
 	    //dont't do anything if the value is equal to data
 	}
 	
 	public String toString(){
-	    return "";
+	    if (left == null && right == null){
+		return data + " " + "_" + " " + "_"  + " ";
+	    }else if (left == null){
+		return data + " " + "_" + " " + right.toString() + " ";
+	    }else if (right == null){
+		return data + " "  + left.toString() + " " + "_" + " ";
+	    }else{
+		return data + " " + left.toString() + " " + right.toString() + " ";
+	    }
 	}
 	public boolean contains(T value){
 	    if (value.compareTo(data) == 0){
@@ -74,8 +89,10 @@ public class BSTree<T extends Comparable<T>>{
 	}
     }
     public String toString(){
-	//check for empty before you do things with root.
-	return "";
+	if (root == null){
+	    return "";
+	}
+	return root.toString();
     }
     public boolean contains(T value){
 	if (root == null){
