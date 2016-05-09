@@ -17,6 +17,12 @@ public class MyHeap<T extends Comparable<T>>{
 	h1.add(1);
 	h1.add(11);	
 	System.out.println(h1.toString());
+
+	Integer[] temp =  new Integer[]{1,4,6,2,7,4,9,2,5,0,10};
+	MyHeap<Integer> h2 = new MyHeap<Integer>(temp);
+	System.out.println(h2.toString());
+	
+	
     }
     
     public MyHeap(){
@@ -27,10 +33,12 @@ public class MyHeap<T extends Comparable<T>>{
     
     public MyHeap(T[] array){
 	data = (T[]) new Comparable[array.length + 1];
-	for (int i = 0; i < data.length; i++){
-	    array[i] = data[i + 1];
+	System.out.println(data.length);
+	for (int i = 0; i < data.length - 1; i++){
+	    data[i + 1] = array[i];
 	}
-	size = 0;
+	//System.out.println(toString());
+	size = array.length;
 	heapify();
     }
     
@@ -72,6 +80,17 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     private void heapify(){
+	//not really sure how to implement O(n) runtime
+	T[] temp = (T[]) new Comparable[data.length];
+	for (int i = 1; i < data.length; i++){
+	    temp[i] = data[i];
+	    data[i] = null;
+	}
+	size = 0;
+	for (int i = 1; i < data.length; i++){
+	    add(temp[i]);
+	}
+		
 	
     }
     
@@ -83,9 +102,11 @@ public class MyHeap<T extends Comparable<T>>{
 	if (size >= data.length - 1){
 	    doubleSize();
 	}
-	data[size + 1] = x;
-	int pos = size + 1;
+	//System.out.println(size);
+	data[size] = x;
+	int pos = size;
 	//System.out.println(data[pos] + " " + pos + " " + pos/2 + " " + data[pos/2]);
+	//System.out.println(toString() + "-----");
 	while (size >= 1 && pos >= 2 && data[pos].compareTo(data[pos / 2]) == 1){
 	    pushUp(pos);
 	    pos = pos / 2;
@@ -94,7 +115,7 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     private void doubleSize(){
-	System.out.println("doubleSize");
+	//System.out.println("doubleSize");
 	T[] temp = (T[]) new Comparable[data.length * 2];
 	for (int i = 0; i < data.length; i++){
 	    temp[i] = data[i];
