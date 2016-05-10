@@ -3,10 +3,12 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
     private int size;
     private T[] data;
+    private boolean max;
 
     public static void main(String[]args){
 	MyHeap<Integer> h1 = new MyHeap<Integer>();
 	//System.out.println(2 / 2);
+	//System.out.println(h1.peek());
 	h1.add(1);
 	h1.add(2);
 	h1.add(3);
@@ -15,11 +17,15 @@ public class MyHeap<T extends Comparable<T>>{
 	h1.add(5);
 	h1.add(2);
 	h1.add(1);
-	h1.add(11);	
+	h1.add(11);
+	System.out.println(h1.delete());
+	System.out.println(h1.peek());
 	System.out.println(h1.toString());
 
-	Integer[] temp =  new Integer[]{1,4,6,2,7,4,9,2,5,0,10};
-	MyHeap<Integer> h2 = new MyHeap<Integer>(temp);
+	Integer[] temp =  new Integer[]{1,4,6,2,7,4,9,2,5,10};
+	MyHeap<Integer> h2 = new MyHeap<Integer>(temp, false);
+	h2.add(14);
+	h2.add(-10);
 	System.out.println(h2.toString());
 	
 	
@@ -28,18 +34,21 @@ public class MyHeap<T extends Comparable<T>>{
     public MyHeap(){
 	data = (T[]) new Comparable[2];
 	size = 0;
-	heapify();
+	max = true;
+	//heapify();
     }
     
     public MyHeap(T[] array){
 	data = (T[]) new Comparable[array.length + 1];
-	System.out.println(data.length);
-	for (int i = 0; i < data.length - 1; i++){
+	//System.out.println(data.length);
+	for (int i = 0; i < array.length; i++){
 	    data[i + 1] = array[i];
 	}
 	//System.out.println(toString());
 	size = array.length;
+	//System.out.println("hereerre");
 	heapify();
+	max = true;
     }
     
     /**pushDown
@@ -50,18 +59,22 @@ public class MyHeap<T extends Comparable<T>>{
        -data is a valid heap
     **/
     private void pushDown(int k){
-	T a = data[k * 2];
-	T b = data[k * 2 + 1];
-	if (a.compareTo(b) >= 0){
-	    //a is greater
-	    T temp = data[k];
-	    data[k] = a;
-	    data[k * 2] = temp;
-	}else{
-	    //b is greater
-	    T temp = data[k];
-	    data[k] = b;
-	    data[k * 2 + 1] = temp;
+	while (k < size / 2 && compare(data[k], data[k * 2]) || k < size / 2 && compare(data[k], data[k * 2 + 1])){
+	    T a = data[k * 2];
+	    T b = data[k * 2 + 1];
+	    if (compare(b, a)){
+		//a is greater
+		T temp = data[k];
+		data[k] = a;
+		data[k * 2] = temp;
+		k = k * 2;
+	    }else{
+		//b is greater
+		T temp = data[k];
+		data[k] = b;
+		data[k * 2 + 1] = temp;
+		k = k * 2 + 1;
+	    }
 	}
     }
     
@@ -72,45 +85,72 @@ public class MyHeap<T extends Comparable<T>>{
        shifted to the correct spot.
        -data is a valid heap
     **/
+
+    private boolean compare(T a, T b){
+	int result = a.compareTo(b);
+	boolean out;
+	if (result >= 0){
+	    out = false;
+	}else{
+	    out = true;
+	}
+	if (max){
+	    return out;
+	}else{
+	    return !out;
+	}
+	// do I need to convert this to a boolean????
+    }
+
+    public T peek(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	}else{	    
+	    return data[1];
+	}
+    }
+    
     private void pushUp(int k){
-	T a = data[k / 2];
-	T temp = data[k];
-	data[k] = a;
-	data[k / 2] = temp;
+	while (size >= 1 && k >= 2 && !compare(data[k], data[k / 2])){
+	    T a = data[k / 2];
+	    T temp = data[k];
+	    data[k] = a;
+	    data[k / 2] = temp;
+	    k = k / 2;
+	}
     }
     
     private void heapify(){
-	//not really sure how to implement O(n) runtime
-	T[] temp = (T[]) new Comparable[data.length];
-	for (int i = 1; i < data.length; i++){
-	    temp[i] = data[i];
-	    data[i] = null;
+	for (int i = size / 2; i > 0; i--){
+	    pushDown(i);
 	}
-	size = 0;
-	for (int i = 1; i < data.length; i++){
-	    add(temp[i]);
-	}
-		
-	
     }
     
     public T delete(){
-	return data[0];
+	if (size == 0){
+	    throw new NoSuchElementException();
+	}else{
+	    T out = data[1];
+	    data[1] = null;
+	    for (int i = 0; i < data.length - 1; i++){
+		data[i] = data[i + 1];
+	    }
+	    size--;
+	    heapify();
+	    return out;
+	}
     }
     
     public void add(T x){
-	if (size >= data.length - 1){
+	if (size >= data.length - 2){
 	    doubleSize();
 	}
 	//System.out.println(size);
-	data[size] = x;
-	int pos = size;
+	data[size + 1] = x;
+	int pos = size + 1;
 	//System.out.println(data[pos] + " " + pos + " " + pos/2 + " " + data[pos/2]);
 	//System.out.println(toString() + "-----");
-	while (size >= 1 && pos >= 2 && data[pos].compareTo(data[pos / 2]) == 1){
-	    pushUp(pos);
-	    pos = pos / 2;
-	}
+	pushUp(pos);
 	size++;
     }
     
@@ -135,8 +175,21 @@ public class MyHeap<T extends Comparable<T>>{
 	
     //do this last
     public MyHeap(boolean isMax){
+	max = isMax;
+	data = (T[]) new Comparable[2];
+	size = 0;
     }
     public MyHeap(T[] array, boolean isMax){
+	data = (T[]) new Comparable[array.length + 1];
+	//System.out.println(data.length);
+	for (int i = 0; i < array.length; i++){
+	    data[i + 1] = array[i];
+	}
+	//System.out.println(toString());
+	size = array.length;
+	//System.out.println("hereerre");
+	heapify();
+	max = isMax;
     }
 	
 }
