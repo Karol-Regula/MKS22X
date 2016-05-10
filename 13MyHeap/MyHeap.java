@@ -6,7 +6,7 @@ public class MyHeap<T extends Comparable<T>>{
     private boolean max;
 
     public static void main(String[]args){
-	MyHeap<Integer> h1 = new MyHeap<Integer>(false);
+	MyHeap<Integer> h1 = new MyHeap<Integer>(true);
 	//System.out.println(2 / 2);
 	//System.out.println(h1.peek());
 	h1.add(1);
@@ -58,8 +58,11 @@ public class MyHeap<T extends Comparable<T>>{
        shifted to the correct spot.
        -data is a valid heap
     **/
+
+
     private void pushDown(int k){
 	while (k < size / 2 && compare(data[k], data[k * 2]) || k < size / 2 && compare(data[k], data[k * 2 + 1])){
+	    //&& compare(data[k], data[k * 2]) || k < size / 2 && compare(data[k], data[k * 2 + 1])){
 	    T a = data[k * 2];
 	    T b = data[k * 2 + 1];
 	    if (compare(b, a)){
@@ -77,6 +80,8 @@ public class MyHeap<T extends Comparable<T>>{
 	    }
 	}
     }
+
+    //need to restructure entire pushDown to make it make sense
     
     /**pushUp
        precondition: data is a heap with at most one item
@@ -86,19 +91,24 @@ public class MyHeap<T extends Comparable<T>>{
        -data is a valid heap
     **/
 
+    //return true if swap
+    //this could be shorter but I wanted to write it down for clarity
     private boolean compare(T a, T b){
 	int result = a.compareTo(b);
 	boolean out;
-	if (result >= 0){
-	    out = false;
-	}else{
-	    out = true;
+	if (result >= 0 && max){
+	    return false;
 	}
-	if (max){
-	    return out;
-	}else{
-	    return !out;
+	if (result >= 0 && !max){
+	    return true;
 	}
+	if (result < 0 && max){
+	    return true;
+	}
+	if (result < 0 && !max){
+	    return false;
+	}
+	return false;
 	// do I need to convert this to a boolean????
     }
 
@@ -121,7 +131,7 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     private void heapify(){
-	for (int i = size / 2; i > 0; i--){
+	for (int i = size / 2; i > 0; i--){/////////////////////////////////// / 2
 	    pushDown(i);
 	}
     }
