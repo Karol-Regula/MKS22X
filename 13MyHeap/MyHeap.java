@@ -6,7 +6,7 @@ public class MyHeap<T extends Comparable<T>>{
     private boolean max;
 
     public static void main(String[]args){
-	MyHeap<Integer> h1 = new MyHeap<Integer>();
+	MyHeap<Integer> h1 = new MyHeap<Integer>(false);
 	//System.out.println(2 / 2);
 	//System.out.println(h1.peek());
 	h1.add(1);
@@ -23,7 +23,7 @@ public class MyHeap<T extends Comparable<T>>{
 	System.out.println(h1.toString());
 
 	Integer[] temp =  new Integer[]{1,4,6,2,7,4,9,2,5,10};
-	MyHeap<Integer> h2 = new MyHeap<Integer>(temp, false);
+	MyHeap<Integer> h2 = new MyHeap<Integer>(temp);
 	h2.add(14);
 	h2.add(-10);
 	System.out.println(h2.toString());
@@ -47,8 +47,8 @@ public class MyHeap<T extends Comparable<T>>{
 	//System.out.println(toString());
 	size = array.length;
 	//System.out.println("hereerre");
-	heapify();
 	max = true;
+	heapify();
     }
     
     /**pushDown
@@ -188,8 +188,8 @@ public class MyHeap<T extends Comparable<T>>{
 	//System.out.println(toString());
 	size = array.length;
 	//System.out.println("hereerre");
-	heapify();
 	max = isMax;
+	heapify();
     }
 	
 }
