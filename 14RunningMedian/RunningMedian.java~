@@ -1,0 +1,15 @@
+public class RunningMedian{
+
+    public static void main(String[]args){
+	//test all previos homeworks
+    }
+
+    public RunningMedian(){
+	myHeap
+    }
+
+    public void returnMedian(){
+	
+    }
+    
+}
